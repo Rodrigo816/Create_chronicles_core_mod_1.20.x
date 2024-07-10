@@ -28,7 +28,7 @@ public class CreateChroniclesCore {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-
+        FluidModifier.modifyShimmerFluid();
     }
 
     // Add the example block item to the building blocks tab
