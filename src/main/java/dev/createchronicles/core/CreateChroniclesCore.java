@@ -1,53 +1,48 @@
 package dev.createchronicles.core;
 import com.mojang.logging.LogUtils;
-import net.minecraftforge.api.distmarker.Dist;
+import com.yungnickyoung.minecraft.ribbits.entity.trade.ItemListing;
+import com.yungnickyoung.minecraft.ribbits.entity.trade.ItemsForAmethysts;
+import com.yungnickyoung.minecraft.ribbits.module.RibbitProfessionModule;
+import com.yungnickyoung.minecraft.ribbits.module.RibbitTradeModule;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.slf4j.Logger;
+import net.minecraftforge.registries.ForgeRegistries;
 
-// The value here should match an entry in the META-INF/mods.toml file
 @Mod(CreateChroniclesCore.MOD_ID)
 public class CreateChroniclesCore {
     public static final String MOD_ID = "create_chronicles_core";
-    private static final Logger LOGGER = LogUtils.getLogger();
-
     public CreateChroniclesCore() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         modEventBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
-        modEventBus.addListener(this::addCreative);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        FluidModifier.modifyShimmerFluid();
+
+        RibbitTradeModule.TRADES.put(RibbitProfessionModule.MERCHANT, new ItemListing[]{
+                new ItemsForAmethysts(getQuarkItem("quark:indigo_corundum_cluster"), 64, 64, 2, 2, 16),
+                new ItemsForAmethysts(getQuarkItem("quark:violet_corundum_cluster"), 64, 64, 2, 2, 16),
+                new ItemsForAmethysts(getQuarkItem("quark:white_corundum_cluster"), 64, 64, 2, 2, 16),
+                new ItemsForAmethysts(getQuarkItem("quark:black_corundum_cluster"), 64, 64, 2, 2, 16),
+                new ItemsForAmethysts(getQuarkItem("quark:yellow_corundum_cluster"), 64, 64, 2, 2, 16),
+        });
+        RibbitTradeModule.TRADES.put(RibbitProfessionModule.FISHERMAN, new ItemListing[]{
+                new ItemsForAmethysts(getQuarkItem("quark:red_corundum_cluster"), 64, 64, 2, 2, 16),
+                new ItemsForAmethysts(getQuarkItem("quark:orange_corundum_cluster"), 64, 64, 2, 2, 16),
+                new ItemsForAmethysts(getQuarkItem("quark:yellow_corundum_cluster"), 64, 64, 2, 2, 16),
+                new ItemsForAmethysts(getQuarkItem("quark:green_corundum_cluster"), 64, 64, 2, 2, 16),
+                new ItemsForAmethysts(getQuarkItem("quark:blue_corundum_cluster"), 64, 64, 2, 2, 16),
+        });
     }
 
-    // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
-
-    }
-
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
-
-    }
-
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-
-        }
+    private static Item getQuarkItem(String registryName) {
+        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(registryName));
     }
 }
