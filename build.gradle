@@ -145,9 +145,6 @@ dependencies {
     implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}")
     implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
 
-    implementation fg.deobf("curse.maven:forbidden-arcanus-309858:5198323")
-    implementation fg.deobf("curse.maven:valhelsia-core-416935:5189548")
-
     implementation fg.deobf("curse.maven:geckolib-388172:5460309")
     implementation fg.deobf("curse.maven:yungs-api-421850:5331703")
     implementation fg.deobf("curse.maven:ribbits-622967:5425415")
